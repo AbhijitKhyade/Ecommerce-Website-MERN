@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500&family=Playfair+Display:wght@700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: black;
+  /* font-family: 'Noto Sans' Arial, Helvetica, sans-serif; */
+  /* font-family: 'PLayfair Display' Arial, Helvetica, sans-serif; */
+}
+
+*::selection {
+  color: #fff;
+  background-color: #000;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* navbar */
+.navbar {
+  font-family: "Noto Sans", sans-serif;
+  line-height: 26px;
+  text-transform: uppercase;
+  box-shadow: 0 8px 6px -6px gray;
+  --webkit-box-shadow: 0 8px 6px -6px rgb(147, 147, 147);
+  border-bottom: solid gray !important;
+}
+
+.nav-link {
+  font-weight: 500;
+  font-size: 15px;
+  color: black;
+}
+
+
+.custom-hover-border {
+  position: relative;
+  /* text-decoration: none; */
+  color: #333;
+}
+
+.custom-hover-border::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: black;
+  transform-origin: 50% 50%;
+  transform: scaleX(0);
+  transition: all 0.4s ease-in-out;
+}
+
+.custom-hover-border:hover::before {
+  transform: scaleX(1);
+}
+
+.navbar-brand {
+  font-weight: 900;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif sans-serif;
+  letter-spacing: 2px;
+  font-size: 2.3vw;
+}
+
+/* search */
+.custom-input-search {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.custom-search-btn {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+
+/* Footer */
+
+.footer {
+  color: white;
+  padding: 25px;
+  background: #000000;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right,
+      #434343,
+      #000000);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #434343, #000000);
+}
+
+.footer a {
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+}
+
+.footer a:hover {
+  color: #ffefba;
+  /* border-bottom: 1px solid #ffefba; */
+}
+
+.custom-hover-border-footer {
+  position: relative;
+  /* text-decoration: none; */
+  color: #333;
+}
+
+.custom-hover-border-footer::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #ffefba;
+  transform-origin: 50% 50%;
+  transform: scaleX(0);
+  transition: all 0.4s ease-in-out;
+}
+
+.custom-hover-border-footer:hover::before {
+  transform: scaleX(1);
+}
+
+/* PAge Not Found */
+.pnf {
+  display: flex;
+  min-height: 65vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pnf-title {
+  font-size: 100px;
+  font-weight: 700;
+}
+
+.pnf-heading {
+  font-weight: normal;
+}
+
+.pnf-btn {
+  color: black;
+  border: 1px solid black;
+  text-decoration: none;
+  padding: 10px;
+  margin-top: 10px;
+  transition: 0.6s all;
+}
+
+.pnf-btn:hover {
+  background-color: black;
+  color: white;
+  border-radius: 50px;
+}
+
+/* Contact Us */
+.contactus {
+  margin: 0;
+  padding: 0;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-focus-outline:focus {
+  outline: 1px solid rgb(31, 106, 205);
+  /* Adjust the color and thickness as needed */
+}
+
+.product-link {
+  text-decoration: none !important;
+  color: black !important;
+
+}
