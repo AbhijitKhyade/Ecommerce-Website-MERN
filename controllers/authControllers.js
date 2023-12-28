@@ -9,25 +9,25 @@ const registerController = async (req, res) => {
     try {
         const { name, email, password, phone, address, answer } = req.body;
 
-        //validations
-        if (!name) {
-            return res.send({ message: 'Name is required' });
-        }
-        if (!email) {
-            return res.send({ message: 'Email is required' });
-        }
-        if (!password) {
-            return res.send({ message: 'Password is required' });
-        }
-        if (!phone) {
-            return res.send({ message: 'Phone no is required' });
-        }
-        if (!address) {
-            return res.send({ message: 'Address is required' });
-        }
-        if (!answer) {
-            return res.send({ message: 'Answer is required' });
-        }
+        // //validations
+        // if (!name) {
+        //     return res.send({ message: 'Name is required' });
+        // }
+        // if (!email) {
+        //     return res.send({ message: 'Email is required' });
+        // }
+        // if (!password) {
+        //     return res.send({ message: 'Password is required' });
+        // }
+        // if (!phone) {
+        //     return res.send({ message: 'Phone no is required' });
+        // }
+        // if (!address) {
+        //     return res.send({ message: 'Address is required' });
+        // }
+        // if (!answer) {
+        //     return res.send({ message: 'Answer is required' });
+        // }
 
         //existing user
         const existingUser = await userModel.findOne({ email });
