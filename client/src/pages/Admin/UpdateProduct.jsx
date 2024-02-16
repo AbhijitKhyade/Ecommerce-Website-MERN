@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import toast from "react-hot-toast";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 
 import Layout from "./../../components/Layout/Layout";
 import AdminMenu from "./../../components/Layout/AdminMenu";
 
 import { Select } from "antd";
+import { BASE_URL } from "../../api";
 const { Option } = Select;
 
 const UpdateProduct = () => {
@@ -26,7 +28,7 @@ const UpdateProduct = () => {
   const getSingleProduct = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/product/get-product/${params.slug}`
+        `${BASE_URL}/product/get-product/${params.slug}`
       );
       setName(data.product.name);
       setId(data.product._id);
@@ -48,14 +50,24 @@ const UpdateProduct = () => {
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8080/category/get-categories"
+        `${BASE_URL}/category/get-categories`
       );
       if (data?.success) {
         setCategories(data?.category);
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong in getting category");
+      toast.error(error?.response?.data?.message, {
+        position: "top-left",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
     }
   };
 
@@ -74,8 +86,7 @@ const UpdateProduct = () => {
       productData.append("quantity", quantity);
       photo && productData.append("photo", photo);
       productData.append("category", category);
-      const { data } = axios.put(
-        `http://localhost:8080/product/update-product/${id}`,
+      const { data } = axios.put(`${BASE_URL}/product/update-product/${id}`,
         productData,
         {
           headers: {
@@ -86,12 +97,31 @@ const UpdateProduct = () => {
       if (data?.success) {
         toast.error(data?.message);
       } else {
-        toast.success("Product Updated Successfully");
+        toast.success(data?.message, {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         navigate("/dashboard/admin/products");
       }
     } catch (error) {
       console.log(error);
-      toast.error("something went wrong");
+      toast.error(error?.response?.data?.message, {
+        position: "top-left",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
     }
   };
 
@@ -100,14 +130,31 @@ const UpdateProduct = () => {
     try {
       let answer = window.prompt("Are You Sure want to delete this product ? ");
       if (!answer) return;
-      const { data } = await axios.delete(
-        `http://localhost:8080/product/delete-product/${id}`
-      );
-      toast.success("Product Deleted Successfully");
+      const { data } = await axios.delete(`${BASE_URL}/product/delete-product/${id}`);
+      toast.success(data?.message, {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       navigate("/dashboard/admin/products");
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong while deleting");
+      toast.error(error?.response?.data?.message, {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
     }
   };
 
@@ -165,7 +212,7 @@ const UpdateProduct = () => {
                 ) : (
                   <div className="text-center">
                     <img
-                      src={`http://localhost:8080/product/product-photo/${id}`}
+                      src={`${BASE_URL}/product/product-photo/${id}`}
                       alt="product_photo"
                       height={"200px"}
                       className="img img-responsive"

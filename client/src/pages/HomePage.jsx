@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import Layout from "./../components/Layout/Layout";
 import { Prices } from "../components/prices";
 import { useCart } from "../context/cart";
+import { BASE_URL } from "../api";
 
 const HomePage = () => {
   const [cart, setCart] = useCart();
@@ -24,7 +25,7 @@ const HomePage = () => {
   const getTotal = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8080/product/product-count"
+        `${BASE_URL}/product/product-count`
       );
       setTotal(data?.total);
     } catch (error) {
@@ -47,7 +48,7 @@ const HomePage = () => {
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8080/category/get-categories"
+        `${BASE_URL}/category/get-categories`
       );
       if (data?.success) {
         setCategories(data?.category);
@@ -67,7 +68,7 @@ const HomePage = () => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `http://localhost:8080/product/product-list/${page}`
+        `${BASE_URL}/product/product-list/${page}`
       );
       setLoading(false);
       setProducts(data?.products);
@@ -78,18 +79,15 @@ const HomePage = () => {
   };
 
   useEffect(() => {
+
     if (!checked.length || !radio.length) getAllProducts();
   }, [checked.length, radio.length]);
-
-  useEffect(() => {
-    if (checked.length || radio.length) filterProducts();
-  }, [checked, radio]);
 
   //get all filters
   const filterProducts = async () => {
     try {
       const { data } = await axios.post(
-        "http://localhost:8080/product/product-filters",
+        `${BASE_URL}/product/product-filters`,
         { checked, radio }
       );
       setProducts(data?.products);
@@ -97,18 +95,17 @@ const HomePage = () => {
       console.log(error);
     }
   };
-
   useEffect(() => {
-    if (page === 1) return;
-    loadMore();
-  }, [page]);
+
+    if (checked.length || radio.length) filterProducts();
+  }, [checked, radio]);
 
   //load more
   const loadMore = async () => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `http://localhost:8080/product/product-list/${page}`
+        `${BASE_URL}/product/product-list/${page}`
       );
       setLoading(false);
       setProducts([...products, ...data?.products]);
@@ -118,9 +115,17 @@ const HomePage = () => {
     }
   };
 
+  useEffect(() => {
+
+    if (page === 1) return;
+    loadMore();
+  }, [page, products]);
+
+
+
   return (
     <Layout title={"All Products - Shop Now!"}>
-      <div className="row m-3">
+      <div className="row m-3 main-bar">
         <div className="col-md-2 mx-1">
           <h5>Filter by Category</h5>
           <div className="d-flex flex-column gap-2">
@@ -161,7 +166,7 @@ const HomePage = () => {
             {products?.map((p) => (
               <div className="card mb-4" style={{ width: "18rem" }}>
                 <img
-                  src={`http://localhost:8080/product/product-photo/${p._id}`}
+                  src={`${BASE_URL}/product/product-photo/${p._id}`}
                   className="card-img-top"
                   style={{ objectFit: "cover" }}
                   alt={p.name}

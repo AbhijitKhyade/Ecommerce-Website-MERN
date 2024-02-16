@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import axios from "axios";
@@ -7,6 +8,7 @@ import Layout from "./../../components/Layout/Layout";
 import { useAuth } from "../../context/auth";
 
 import { Select } from "antd";
+import { BASE_URL } from "../../api";
 const { Option } = Select;
 
 const AdminOrders = () => {
@@ -21,10 +23,10 @@ const AdminOrders = () => {
 
   const [orders, setOrders] = useState([]);
   const [auth, setAuth] = useAuth();
-  
+
   const getOrders = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8080/auth/all-orders");
+      const { data } = await axios.get(`${BASE_URL}/auth/all-orders`);
       setOrders(data);
     } catch (error) {
       console.log(error);
@@ -37,8 +39,7 @@ const AdminOrders = () => {
 
   const handleChange = async (orderId, value) => {
     try {
-      const { data } = await axios.put(
-        `http://localhost:8080/auth/order-status/${orderId}`,
+      await axios.put(`${BASE_URL}/auth/order-status/${orderId}`,
         { status: value }
       );
       getOrders();
@@ -98,7 +99,7 @@ const AdminOrders = () => {
                       <div className="row card p-3 flex-row mb-3 ">
                         <div className="col-md-4">
                           <img
-                            src={`http://localhost:8080/product/product-photo/${p._id}`}
+                            src={`${BASE_URL} / product / product - photo / ${p._id}`}
                             className="card-img-top "
                             style={{ objectFit: "cover" }}
                             width={"200px"}

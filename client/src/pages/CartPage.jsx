@@ -7,6 +7,7 @@ import axios from "axios";
 import Layout from "./../components/Layout/Layout";
 import { useCart } from "../context/cart";
 import { useAuth } from "../context/auth";
+import { BASE_URL } from "../api";
 
 const CartPage = () => {
   const [auth, setAuth] = useAuth();
@@ -50,7 +51,7 @@ const CartPage = () => {
   const getToken = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8080/product/braintree/token"
+        `${BASE_URL}/product/braintree/token`
       );
       setClientToken(data?.clientToken);
     } catch (error) {
@@ -64,7 +65,7 @@ const CartPage = () => {
       setLoading(true);
       const { nonce } = await instance.requestPaymentMethod();
       const { data } = await axios.post(
-        "http://localhost:8080/product/braintree/payment",
+        `${BASE_URL}/product/braintree/payment`,
         {
           nonce,
           cart,

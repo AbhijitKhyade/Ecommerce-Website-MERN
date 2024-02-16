@@ -4,15 +4,17 @@ import axios from "axios";
 
 import { useAuth } from "../../context/auth";
 import Spinner from "./../Spinner";
+import { BASE_URL } from "../../api";
 
 const AdminRoute = () => {
   const [ok, setOk] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [auth, setAuth] = useAuth();
 
   useEffect(() => {
     const authCheck = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/auth/admin-auth");
+        const res = await axios.get(`${BASE_URL}/auth/admin-auth`);
         if (res.data.ok) {
           setOk(true);
         } else {
@@ -20,7 +22,7 @@ const AdminRoute = () => {
         }
       } catch (error) {
         console.error("Error checking authentication:", error);
-        setOk(false); 
+        setOk(false);
       }
     };
 
@@ -29,7 +31,7 @@ const AdminRoute = () => {
     }
   }, [auth?.token]);
 
-  return ok ? <Outlet /> : <Spinner path=""/>;
+  return ok ? <Outlet /> : <Spinner path="" />;
 };
 
 export default AdminRoute;

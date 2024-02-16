@@ -26,6 +26,8 @@ import CategoryProduct from './pages/CategoryProduct';
 import CartPage from './pages/CartPage';
 import AdminOrders from './pages/Admin/AdminOrders';
 import './App.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -60,6 +62,7 @@ function App() {
         <Route path='/policy' element={<PolicyPage />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
+      <ToastContainer />
     </>
   );
 }

@@ -8,7 +8,7 @@ const AboutPage = () => {
     <Layout title={"About us"}>
       <div className="row contactus ">
         <div className="col-md-6 ">
-          <img src={about} alt="contactus" style={{ width: "100%" }} />
+          <img src={about} alt="contactus" style={{ width: "100%", height: "400px" }} />
         </div>
         <div className="col-md-4 ">
           <p className="mt-2 fs-5 text-justify">

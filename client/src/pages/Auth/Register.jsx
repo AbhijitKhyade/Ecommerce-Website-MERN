@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 
 import Layout from "./../../components/Layout/Layout";
 import "../../styles/AuthStyles.css";
+import { BASE_URL } from './../../api';
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -22,7 +24,7 @@ const Register = () => {
     setIsFormSubmitted(true);
 
     try {
-      const res = await axios.post("http://localhost:8080/auth/register", {
+      const res = await axios.post(`${BASE_URL}/auth/register`, {
         name,
         email,
         password,
@@ -32,14 +34,32 @@ const Register = () => {
       });
 
       if (res.data.success) {
-        toast.success(res.data && res.data.message);
+        toast.success(res.data.message, {
+          position: "top-left",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         navigate("/login");
       } else {
         toast.error(res.data.message);
       }
     } catch (error) {
       console.error(error);
-      toast.error("Error while signing up");
+      toast.error(error?.response?.data?.message, {
+        position: "top-left",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -54,9 +74,8 @@ const Register = () => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className={`form-control ${
-                isFormSubmitted && !name ? "is-invalid" : ""
-              }`}
+              className={`form-control ${isFormSubmitted && !name ? "is-invalid" : ""
+                }`}
               placeholder="Enter Your Name"
               required
               autoFocus
@@ -71,9 +90,8 @@ const Register = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`form-control ${
-                isFormSubmitted && !email ? "is-invalid" : ""
-              }`}
+              className={`form-control ${isFormSubmitted && !email ? "is-invalid" : ""
+                }`}
               placeholder="Enter Your Email"
               required
             />
@@ -87,9 +105,8 @@ const Register = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`form-control ${
-                isFormSubmitted && !password ? "is-invalid" : ""
-              }`}
+              className={`form-control ${isFormSubmitted && !password ? "is-invalid" : ""
+                }`}
               placeholder="Enter Your Password"
               required
             />
@@ -103,9 +120,8 @@ const Register = () => {
               type="text"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className={`form-control ${
-                isFormSubmitted && !phone ? "is-invalid" : ""
-              }`}
+              className={`form-control ${isFormSubmitted && !phone ? "is-invalid" : ""
+                }`}
               placeholder="Enter Your Phone"
               required
             />
@@ -121,9 +137,8 @@ const Register = () => {
               type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              className={`form-control ${
-                isFormSubmitted && !address ? "is-invalid" : ""
-              }`}
+              className={`form-control ${isFormSubmitted && !address ? "is-invalid" : ""
+                }`}
               placeholder="Enter Your Address"
               required
             />
@@ -137,9 +152,8 @@ const Register = () => {
               type="text"
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
-              className={`form-control ${
-                isFormSubmitted && !answer ? "is-invalid" : ""
-              }`}
+              className={`form-control ${isFormSubmitted && !answer ? "is-invalid" : ""
+                }`}
               placeholder="What is your favorite Sport?"
               required
             />

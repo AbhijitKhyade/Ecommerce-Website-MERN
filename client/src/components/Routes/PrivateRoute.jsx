@@ -4,15 +4,17 @@ import axios from "axios";
 
 import { useAuth } from "../../context/auth";
 import Spinner from "./../Spinner";
+import { BASE_URL } from "../../api";
 
 const PrivateRoute = () => {
   const [ok, setOk] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [auth, setAuth] = useAuth();
 
   useEffect(() => {
     const authCheck = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/auth/user-auth");
+        const res = await axios.get(`${BASE_URL}/auth/user-auth`);
         if (res.data.ok) {
           setOk(true);
         } else {

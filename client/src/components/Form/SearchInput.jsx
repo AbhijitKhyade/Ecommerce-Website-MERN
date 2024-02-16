@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { useSearch } from "../../context/search";
+import { BASE_URL } from "../../api";
 
 const SearchInput = () => {
   const [values, setValues] = useSearch();
@@ -13,7 +14,7 @@ const SearchInput = () => {
     e.preventDefault();
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/product/search/${values.keyword}`
+        `${BASE_URL}/product/search/${values.keyword}`
       );
       setValues({ ...values, results: data });
       navigate("/search");
@@ -21,7 +22,7 @@ const SearchInput = () => {
       console.log(error);
     }
   };
-  
+
   return (
     <div className="d-flex align-items-center">
       <form className="d-flex" role="search" onSubmit={handleSubmit}>

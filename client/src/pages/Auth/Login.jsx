@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import toast from "react-hot-toast";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 
 import Layout from "./../../components/Layout/Layout";
 import { useAuth } from "../../context/auth";
 import "../../styles/AuthStyles.css";
+import { BASE_URL } from './../../api';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -29,13 +31,22 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:8080/auth/login", {
+      const res = await axios.post(`${BASE_URL}/auth/login`, {
         email,
         password,
       });
-
+      // console.log("login:", res.data);
       if (res && res.data.success) {
-        toast.success(res.data.message);
+        toast.success(res.data.message, {
+          position: "top-left",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         setAuth({
           ...auth,
           user: res.data.user,
@@ -47,8 +58,17 @@ const Login = () => {
         toast.error(res.data.message || "Login failed");
       }
     } catch (error) {
-      console.error("Error while logging in:", error.message);
-      toast.error("Error while logging in");
+      console.error("Error while logging in:", error);
+      toast.error(error?.response?.data?.message, {
+        position: "top-left",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -59,9 +79,8 @@ const Login = () => {
       <div className="form-container">
         <form
           onSubmit={handleSubmit}
-          className={`needs-validation ${
-            isFormSubmitted ? "was-validated" : ""
-          }`}
+          className={`needs-validation ${isFormSubmitted ? "was-validated" : ""
+            }`}
           noValidate
         >
           <h4 className="title">LOGIN FORM</h4>
@@ -71,9 +90,8 @@ const Login = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`form-control ${
-                isFormSubmitted && !email ? "is-invalid" : ""
-              }`}
+              className={`form-control ${isFormSubmitted && !email ? "is-invalid" : ""
+                }`}
               id="email"
               placeholder="Enter Your Email"
               required
@@ -89,9 +107,8 @@ const Login = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`form-control ${
-                isFormSubmitted && !password ? "is-invalid" : ""
-              }`}
+              className={`form-control ${isFormSubmitted && !password ? "is-invalid" : ""
+                }`}
               id="password"
               placeholder="Enter Your Password"
               required

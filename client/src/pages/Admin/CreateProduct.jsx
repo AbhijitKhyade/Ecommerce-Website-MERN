@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 
 import Layout from "../../components/Layout/Layout";
 import AdminMenu from "../../components/Layout/AdminMenu";
 
 import { Select } from "antd";
+import { BASE_URL } from "../../api";
 const { Option } = Select;
 
 const CreateProduct = () => {
@@ -16,6 +18,7 @@ const CreateProduct = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [shipping, setShipping] = useState("");
   const [photo, setPhoto] = useState("");
 
@@ -25,14 +28,24 @@ const CreateProduct = () => {
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8080/category/get-categories"
+        `${BASE_URL}/category/get-categories`
       );
       if (data?.success) {
         setCategories(data?.category);
       }
     } catch (error) {
       console.log(error);
-      toast.error("Error while fetching Category");
+      toast.error(error?.response?.data?.message, {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
     }
   };
 
@@ -53,19 +66,37 @@ const CreateProduct = () => {
       productData.append("category", category);
 
       const { data } = await axios.post(
-        "http://localhost:8080/product/create-product",
+        `${BASE_URL}/product/create-product`,
         productData
       );
-      console.log(data);
+      // console.log(data);
       if (data?.success) {
-        toast.success("Product created successfully!");
+        toast.success(data?.message, {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         navigate("/dashboard/admin/products");
       } else {
         toast.error(data?.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error("Error while creating product");
+      toast.error(error?.response?.data?.message, {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 

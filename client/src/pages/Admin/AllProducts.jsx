@@ -5,6 +5,7 @@ import axios from "axios";
 
 import AdminMenu from "../../components/Layout/AdminMenu";
 import Layout from "../../components/Layout/Layout";
+import { BASE_URL } from "../../api";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -13,7 +14,7 @@ const AllProducts = () => {
   const getAllProducts = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8080/product/get-products"
+        `${BASE_URL}/product/get-products`
       );
       setProducts(data.products);
     } catch (error) {
@@ -44,7 +45,7 @@ const AllProducts = () => {
                 >
                   <div className="card m-2" style={{ width: "16rem" }}>
                     <img
-                      src={`http://localhost:8080/product/product-photo/${p._id}`}
+                      src={`${BASE_URL}/product/product-photo/${p._id}`}
                       className="card-img-top"
                       style={{ objectFit: "cover" }}
                       alt={p.name}

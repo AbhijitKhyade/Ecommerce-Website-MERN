@@ -2,6 +2,7 @@ import React from "react";
 
 import { useSearch } from "../context/search";
 import Layout from "../components/Layout/Layout";
+import { BASE_URL } from "../api";
 
 const Search = () => {
   const [values, setValues] = useSearch();
@@ -20,7 +21,7 @@ const Search = () => {
             {values?.results.map((p) => (
               <div className="card mb-4" style={{ width: "18rem" }}>
                 <img
-                  src={`http://localhost:8080/product/product-photo/${p._id}`}
+                  src={`${BASE_URL}/product/product-photo/${p._id}`}
                   className="card-img-top"
                   style={{ objectFit: "cover" }}
                   alt={p.name}

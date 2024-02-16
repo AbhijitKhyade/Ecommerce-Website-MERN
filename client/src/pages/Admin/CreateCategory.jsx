@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import { Modal } from "antd";
 
 import Layout from "./../../components/Layout/Layout";
 import AdminMenu from "./../../components/Layout/AdminMenu";
 import CategoryForm from "../../components/Form/CategoryForm";
+import { BASE_URL } from "../../api";
 
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -19,20 +21,49 @@ const CreateCategory = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:8080/category/create-category",
+        `${BASE_URL}/category/create-category`,
         {
           name,
         }
       );
       if (data?.success) {
-        toast.success(`${name} is created`);
+        toast.success(`${name} is created`, {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         getAllCategory();
       } else {
-        toast.error(data.message);
+        toast.error(data?.message, {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     } catch (error) {
       console.log(error);
-      toast.error("Enter category name to Add Category");
+      // toast.error("Enter category name to Add Category");
+      toast.error(error?.response?.data?.message, {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
     }
   };
 
@@ -40,14 +71,23 @@ const CreateCategory = () => {
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8080/category/get-categories"
+        `${BASE_URL}/category/get-categories`
       );
       if (data?.success) {
         setCategories(data?.category);
       }
     } catch (error) {
       console.log(error);
-      toast.error("Error while fetching Category");
+      toast.error(error?.response?.data?.message, {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -60,7 +100,7 @@ const CreateCategory = () => {
     e.preventDefault();
     try {
       const { data } = await axios.put(
-        `http://localhost:8080/category/update-category/${selected._id}`,
+        `${BASE_URL}/category/update-category/${selected._id}`,
         { name: updatedName }
       );
       if (data.success) {
@@ -73,7 +113,16 @@ const CreateCategory = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Error while updating category");
+      toast.error(error?.response?.data?.message, {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -81,17 +130,37 @@ const CreateCategory = () => {
   const handleDelete = async (pId) => {
     try {
       const { data } = await axios.delete(
-        `http://localhost:8080/category/delete-category/${pId}`
+        `${BASE_URL}/category/delete-category/${pId}`
       );
+      // console.log(data);
       if (data.success) {
-        toast.success(`Category is deleted`);
+
+        toast.success(data?.message, {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
 
         getAllCategory();
       } else {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Error while deleting category");
+      toast.error(error?.response?.data?.message, {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 

@@ -3,26 +3,28 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 import Layout from "./../components/Layout/Layout";
+import { BASE_URL } from "../api";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState([]);
   const [relatedProduct, setRelatedProduct] = useState([]);
   const params = useParams();
   const navigate = useNavigate();
-  //get product
-  const getProduct = async () => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:8080/product/get-product/${params.slug}`
-      );
-      setProduct(data?.product);
-      getRelatedProducts(data?.product._id, data?.product?.category._id);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
 
   useEffect(() => {
+    //get product
+    const getProduct = async () => {
+      try {
+        const { data } = await axios.get(
+          `${BASE_URL}/product/get-product/${params.slug}`
+        );
+        setProduct(data?.product);
+        getRelatedProducts(data?.product._id, data?.product?.category._id);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     if (params?.slug) getProduct();
   }, [params?.slug]);
 
@@ -30,7 +32,7 @@ const ProductDetails = () => {
   const getRelatedProducts = async (pid, cid) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/product/related-product/${pid}/${cid}`
+        `${BASE_URL}/product/related-product/${pid}/${cid}`
       );
       setRelatedProduct(data?.products);
     } catch (error) {
@@ -44,7 +46,7 @@ const ProductDetails = () => {
         <div className="row container m-2 ">
           <div className="col-md-4 text-center">
             <img
-              src={`http://localhost:8080/product/product-photo/${product._id}`}
+              src={`${BASE_URL}/product/product-photo/${product._id}`}
               className="card-img-top border"
               style={{ objectFit: "cover", width: "300px", height: "300px" }}
               alt={product.name}
@@ -73,7 +75,7 @@ const ProductDetails = () => {
             {relatedProduct?.map((p) => (
               <div className="card mb-4" style={{ width: "18rem" }}>
                 <img
-                  src={`http://localhost:8080/product/product-photo/${p._id}`}
+                  src={`${BASE_URL}/product/product-photo/${p._id}`}
                   className="card-img-top"
                   style={{ objectFit: "cover" }}
                   alt={p.name}
